@@ -1,0 +1,25 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: production-circle-demo
+  labels:
+    app: simple-backend
+spec:
+  selector:
+    matchLabels:
+      app: ci-deploy
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ci-deploy
+        tier: backend
+    spec:
+      containers:
+        - image: gcr.io/celtic-list-251501/circleci-gke:v1
+          name: rusty-pangolin
+          ports:
+            - containerPort: 3000
+              name: ci-deploy
