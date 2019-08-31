@@ -46,7 +46,7 @@ jobs:
       # Initialize the `gcloud` CLI.
       - gcp-gke/init
       # Update a deployment Docker image.
-      - gcp-gke/rollout-image:
+      - gcp-gke/publish-and-rollout-image:
           cluster: circle-ci-cluster
           deployment: production-circle-demo # circle-ci-cluster
           container: rusty-pangolin
