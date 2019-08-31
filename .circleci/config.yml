@@ -34,14 +34,25 @@ jobs:
       - checkout
       - gcr/gcr-auth
       - gcr/build-image:
-          image: circleci-gke
-          tag: "1.0.3"
+          image: grackle-backend
+          tag: "1.0.1"
       - gcr/push-image:
-          image: circleci-gke
-          tag: "1.0.3"
-    
-  deploy:
-    description: Deploy application to Google Kubernetes Engine
+          image: grackle-backend
+          tag: "1.0.1"
+  Deploy-To-Staging-Server:
+    # setup environments 
+    environment:
+      NODE_ENV: staging
+    description: Deploy application to GKE Staging Cluster
+    machine: true
+    steps:
+      # Just echo some stuffs here
+      - run: echo "Successfully deployed to" $NODE_ENV
+  Deploy-To-Production-Server:
+    # setup environments 
+    environment:
+      NODE_ENV: production
+    description: Deploy application to Google Kubernetes Engine Production Cluster
     machine: true
     steps:
       # Install `gcloud` and `kubectl` if not already installed.
@@ -53,7 +64,7 @@ jobs:
           cluster: circle-ci-cluster
           deployment: production-circle-demo # circle-ci-cluster
           container: rusty-pangolin
-          image: gcr.io/celtic-list-251501/circleci-gke:1.0.3
+          image: gcr.io/celtic-list-251501/grackle-backend:1.0.1
 workflows:
   version: 2.1
   build_update_deploy:
@@ -62,6 +73,9 @@ workflows:
       - Build-Push-Image-Docker:
           requires:
             - build
-      - deploy:
+      - Deploy-To-Staging-Server:
+          requires:
+            - Build-Push-Image-Docker
+      - Deploy-To-Production-Server:
           requires:
             - Build-Push-Image-Docker
