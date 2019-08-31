@@ -20,6 +20,9 @@ jobs:
             - run:
                 name: Install application dependencies
                 command: npm install
+            - run:
+                name: Run all the tests cases
+                command: npm run test
           # Save cache
           cache-key: package.json
           # Ignore non-checksum cache hits
@@ -32,10 +35,10 @@ jobs:
       - gcr/gcr-auth
       - gcr/build-image:
           image: circleci-gke
-          tag: "1.0.2"
+          tag: "1.0.3"
       - gcr/push-image:
           image: circleci-gke
-          tag: "1.0.2"
+          tag: "1.0.3"
     
   deploy:
     description: Deploy application to Google Kubernetes Engine
@@ -50,7 +53,7 @@ jobs:
           cluster: circle-ci-cluster
           deployment: production-circle-demo # circle-ci-cluster
           container: rusty-pangolin
-          image: gcr.io/celtic-list-251501/circleci-gke:1.0.2 # change version when updating
+          image: gcr.io/celtic-list-251501/circleci-gke:1.0.3
 workflows:
   version: 2.1
   build_update_deploy:
