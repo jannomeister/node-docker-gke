@@ -1,8 +1,8 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.4 # past version: 1.0.1
-  gcp-gke: circleci/gcp-gke@0.2.0 # past version: 0.1.0
-  gcr: circleci/gcp-gcr@0.6.1 # past version 0.0.2
+  node: circleci/node@1.0.1
+  gcp-gke: circleci/gcp-gke@0.1.0
+  gcr: circleci/gcp-gcr@0.0.2
 jobs:
   build:
     description: Install npm
@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       # Install node
-      - node/install # past node/install
+      - node/install
       # Install npm
       - node/install-npm
       # Download and cache dependencies
@@ -48,7 +48,7 @@ jobs:
       # Update a deployment Docker image.
       - gcp-gke/rollout-image:
           cluster: circle-ci-cluster
-          deployment: production-circle-demo # circle-ci-cluster
+          deployment: production-circle-demo
           container: rusty-pangolin
           image: gcr.io/celtic-list-251501/circleci-gke:v2 # change version when updating
 workflows:
