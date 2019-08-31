@@ -45,6 +45,8 @@ jobs:
       - gcp-gke/install
       # Initialize the `gcloud` CLI.
       - gcp-gke/init
+      # show current context
+      - kubectl config current-context
       # Update a deployment Docker image.
       - gcp-gke/rollout-image:
           cluster: circle-ci-cluster
