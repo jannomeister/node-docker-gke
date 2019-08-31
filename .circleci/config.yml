@@ -35,10 +35,10 @@ jobs:
       - gcr/gcr-auth
       - gcr/build-image:
           image: grackle-backend
-          tag: "1.0.2"
+          tag: "1.0.3"
       - gcr/push-image:
           image: grackle-backend
-          tag: "1.0.2"
+          tag: "1.0.3"
   Deploy-To-Staging-Server:
     # setup environments 
     environment:
@@ -64,7 +64,7 @@ jobs:
           cluster: circle-ci-cluster
           deployment: production-circle-demo # circle-ci-cluster
           container: rusty-pangolin
-          image: gcr.io/celtic-list-251501/grackle-backend:1.0.2
+          image: gcr.io/celtic-list-251501/grackle-backend:1.0.3
 workflows:
   version: 2.1
   build_update_deploy:
@@ -76,6 +76,14 @@ workflows:
       - Deploy-To-Staging-Server:
           requires:
             - Build-Push-Image-Docker
+          filters:
+            branches:
+              only:
+                - staging
       - Deploy-To-Production-Server:
           requires:
             - Deploy-To-Staging-Server
+          filters:
+            branches:
+              only:
+                - master
