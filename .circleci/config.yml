@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 orbs:
   node: circleci/node@1.1.4 # past version: 1.0.1
   gcp-gke: circleci/gcp-gke@0.2.0 # past version: 0.1.0
@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       # Install node
-      - install-node # past node/install
+      - node/install # past node/install
       # Install npm
       - node/install-npm
       # Download and cache dependencies
@@ -51,7 +51,7 @@ jobs:
           container: rusty-pangolin
           image: gcr.io/celtic-list-251501/circleci-gke:v2 # change version when updating
 workflows:
-  version: 2
+  version: 2.1
   build_update_deploy:
     jobs:
       - build
