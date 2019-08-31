@@ -51,6 +51,7 @@ jobs:
           container: rusty-pangolin
           image: gcr.io/celtic-list-251501/circleci-gke:v2 # change version when updating
 workflows:
+  version: 2
   build_update_deploy:
     jobs:
       - build
